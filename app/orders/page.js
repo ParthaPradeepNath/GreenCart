@@ -6,7 +6,7 @@ import { useAppContext } from "@/context/AppContext";
 import toast from "react-hot-toast";
 
 const Orders = () => {
-  const { user, setShowUserLogin, currency, setCartItems } = useAppContext();
+  const { user, setShowUserLogin, currency } = useAppContext();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -28,14 +28,14 @@ const Orders = () => {
         } else {
           toast.error(data.message);
         }
-      } catch (error) {
+      } catch {
         toast.error("Failed to load orders");
       } finally {
         setLoading(false);
       }
     };
     fetchOrders();
-  }, [user]);
+  }, [user, setShowUserLogin]);
 
   if (loading) {
     return <div className="py-24 text-center text-gray-500">Loading orders...</div>;

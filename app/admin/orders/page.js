@@ -24,7 +24,7 @@ const AdminOrders = () => {
       });
       const data = await res.json();
       if (data.success) setOrders(data.orders);
-    } catch (error) {
+    } catch {
       toast.error("Failed to load orders");
     } finally {
       setLoading(false);
@@ -53,7 +53,7 @@ const AdminOrders = () => {
       } else {
         toast.error(data.message);
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to update status");
     }
   };
@@ -73,7 +73,7 @@ const AdminOrders = () => {
       } else {
         toast.error(data.message);
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to delete order");
     }
   };

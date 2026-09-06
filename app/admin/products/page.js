@@ -1,11 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useAppContext } from "@/context/AppContext";
 import toast from "react-hot-toast";
 
 const AdminProducts = () => {
-  const { user } = useAppContext();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -40,7 +38,7 @@ const AdminProducts = () => {
 
       if (productsData.success) setProducts(productsData.products);
       if (categoriesData.success) setCategories(categoriesData.categories);
-    } catch (error) {
+    } catch {
       toast.error("Failed to load data");
     } finally {
       setLoading(false);
@@ -122,7 +120,7 @@ const AdminProducts = () => {
       } else {
         toast.error(data.message);
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to save product");
     }
   };
@@ -142,7 +140,7 @@ const AdminProducts = () => {
       } else {
         toast.error(data.message);
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to delete product");
     }
   };

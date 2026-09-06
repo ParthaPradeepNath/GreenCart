@@ -1,0 +1,41 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: greencart_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: greencart
+      POSTGRES_PASSWORD: greencart123
+      POSTGRES_DB: greencart
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U greencart -d greencart"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: greencart_app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://greencart:greencart123@db:5432/greencart?schema=public
+      JWT_SECRET: ${JWT_SECRET:-greencart_jwt_secret_docker}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-greencart_jwt_refresh_secret_docker}
+      RAZORPAY_KEY_ID: ${RAZORPAY_KEY_ID:-rzp_test_placeholder}
+      RAZORPAY_KEY_SECRET: ${RAZORPAY_KEY_SECRET:-placeholder}
+      NEXT_PUBLIC_CURRENCY: "₹"
+      NEXT_PUBLIC_APP_URL: "http://localhost:3000"
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:

@@ -1,0 +1,27 @@
+# Dependencies
+node_modules
+
+# Next.js build output
+.next/
+out/
+build/
+dist/
+
+# Misc output / coverage
+coverage/
+
+# Env files
+.env
+.env.local
+.env*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Misc
+.DS_Store
+*.pem
+
+# Lockfile is formatted by package managers, skip it
+package-lock.json
